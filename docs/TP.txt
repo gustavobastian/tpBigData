@@ -3,7 +3,7 @@ MATCH (a:Persona)-[r]-() delete a,r;
 MATCH (a:Persona) delete a;
 MATCH (a:materia) delete a;
 MATCH (a) delete a;//borro todos los nodos
-MATCH (a:Persona)-[r]-() delete r;
+MATCH (a:Persona)-[r:CONOCE]-() delete r;
 
 Creo personas
 
@@ -33,18 +33,20 @@ CREATE
 
 Creo materias
 CREATE 
- (m: materia { id: 1, nombre: "Analisis Matemático", tipo:"obligatoria"} ),
- (m2: materia { id: 2, nombre: "Geometria", tipo:"obligatoria"} ),
- (Do: materia { id: 3, nombre: "Identificacion de sistemas", tipo:"obligatoria"}),
+ (m: materia { id: 1, nombre: "Protocolos de Internet", tipo:"obligatoria"} ),
+ (m2: materia { id: 2, nombre: "Diseño de aplicaciones 1", tipo:"obligatoria"} ),
+ (Do: materia { id: 3, nombre: "Gestion de proyectos", tipo:"obligatoria"}),
  (m3: materia { id: 4, nombre: "Arquitecturas de datos", tipo:"obligatoria"} ),
- (m4: materia { id: 5, nombre: "Diseño aeroespacial", tipo:"obligatoria"} ),
- (D4: materia { id: 6, nombre: "Geología venusiana", tipo:"obligatoria"}),
- (D5: materia { id: 7, nombre: "Atmosfera de saturno", tipo:"obligatoria"}),
- (D6: materia { id: 8, nombre: "Aerodinámica de Odonatos", tipo:"electiva"}),
- (D7: materia { id: 9, nombre: "C", tipo:"electiva"}),
- (D8: materia { id: 10, nombre: "Javascript", tipo:"electiva"}), 
- (D9: materia { id: 11, nombre: "Odonatos en Venus", tipo:"electiva"}),
- (D10: materia { id: 12, nombre: "Odonatos en Marte", tipo:"electiva"});
+ (m4: materia { id: 5, nombre: "Diseño de aplicaciones 2", tipo:"obligatoria"} ),
+ (D4: materia { id: 6, nombre: "Arquitectura de protocolos", tipo:"obligatoria"}),
+ (D5: materia { id: 7, nombre: "Grandes volumentes de datos", tipo:"obligatoria"}),
+ (D6: materia { id: 8, nombre: "Diseño de aplicaciones 3", tipo:"obligatoria"}),
+ (D7: materia { id: 9, nombre: "Ciberseguridad en Iot", tipo:"obligatoria"}),
+ (D8: materia { id: 10, nombre: "Machine learning", tipo:"obligatoria"}), 
+ (D9: materia { id: 11, nombre: "Introduccion a Ia", tipo:"Electiva"}),
+ (D10: materia { id: 12, nombre: "Introduccion a embebidos", tipo:"Electiva"}),
+ (D93: materia { id: 13, nombre: "Testing IOT", tipo:"Electiva"}),
+ (D12: materia { id: 14, nombre: "Implementacion de Sistemas", tipo:"Electiva"});
  
  
  Asigno profesores
@@ -66,101 +68,105 @@ MATCH (a:Persona{id:6}),(b:materia {id:2}) CREATE (a)-[r:DICTO {año:"2001"}]->(b
 MATCH (a:Persona{id:6}),(b:materia {id:3}) CREATE (a)-[r:DICTO {año:"2001"}]->(b) return a,b,r;
 MATCH (a:Persona{id:6}),(b:materia {id:11}) CREATE (a)-[r:DICTO {año:"2002"}]->(b) return a,b,r;
 MATCH (a:Persona{id:6}),(b:materia {id:12}) CREATE (a)-[r:DICTO {año:"2002"}]->(b) return a,b,r;
-un alumno enseño
+
 MATCH (a:Persona{apellido:"Pereyra"}),(b:materia {id:1}) CREATE (a)-[r:DICTO {año:"2003"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Pereyra"}),(b:materia {id:13}) CREATE (a)-[r:DICTO {año:"2003"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Pereyra"}),(b:materia {id:14}) CREATE (a)-[r:DICTO {año:"2003"}]->(b) return a,b,r;
  
 
 Asigno alumnos 
- MATCH (a:Persona{apellido:"González"}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:8}]->(b) return a,b,r;
- MATCH (a:Persona{apellido:"González"}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2001", nota:9}]->(b) return a,b,r;
- MATCH (a:Persona{apellido:"González"}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:5}]->(b) return a,b,r;
- MATCH (a:Persona{apellido:"González"}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2001", nota:6}]->(b) return a,b,r;
- MATCH (a:Persona{apellido:"González"}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:6}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"González"}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:8, grupo:"A"}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"González"}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2001", nota:9, grupo:"A"}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"González"}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:5, grupo:"A"}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"González"}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2001", nota:6, grupo:"A"}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"González"}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:6, grupo:"A"}]->(b) return a,b,r;
  
- MATCH (a:Persona{apellido:"Lupis"}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:7}]->(b) return a,b,r;
- MATCH (a:Persona{apellido:"Lupis"}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2001", nota:10}]->(b) return a,b,r;
- MATCH (a:Persona{apellido:"Lupis"}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2000", nota:6}]->(b) return a,b,r;
- MATCH (a:Persona{apellido:"Lupis"}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:5}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"Lupis"}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:7, grupo:"B"}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"Lupis"}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2001", nota:10, grupo:"B"}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"Lupis"}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2000", nota:6, grupo:"B"}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"Lupis"}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:5, grupo:"B"}]->(b) return a,b,r;
  
- MATCH (a:Persona{apellido:"Mendez"}),(b:materia {id:10}) CREATE (a)-[r:CURSO{año:"2002", nota:6}]->(b) return a,b,r;
- MATCH (a:Persona{apellido:"Mendez"}),(b:materia {id:9}) CREATE (a)-[r:CURSO{año:"2001", nota:10}]->(b) return a,b,r;
- MATCH (a:Persona{apellido:"Mendez"}),(b:materia {id:11}) CREATE (a)-[r:CURSO{año:"2002", nota:10}]->(b) return a,b,r;
- MATCH (a:Persona{apellido:"Mendez"}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2003", nota:10}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"Mendez"}),(b:materia {id:10}) CREATE (a)-[r:CURSO{año:"2002", nota:6, grupo:"A"}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"Mendez"}),(b:materia {id:9}) CREATE (a)-[r:CURSO{año:"2001", nota:10, grupo:"A"}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"Mendez"}),(b:materia {id:11}) CREATE (a)-[r:CURSO{año:"2002", nota:10, grupo:"A"}]->(b) return a,b,r;
+ MATCH (a:Persona{apellido:"Mendez"}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2003", nota:10, grupo:"A"}]->(b) return a,b,r;
  
-MATCH (a:Persona{apellido:"Dominguez"}),(b:materia {id:10}) CREATE (a)-[r:CURSO{año:"2002", nota:5}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"Dominguez"}),(b:materia {id:9}) CREATE (a)-[r:CURSO{año:"2001", nota:8}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"Dominguez"}),(b:materia {id:8}) CREATE (a)-[r:CURSO{año:"2001", nota:9}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"Dominguez"}),(b:materia {id:7}) CREATE (a)-[r:CURSO{año:"2002", nota:9}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"Dominguez"}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2001", nota:9}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Dominguez"}),(b:materia {id:10}) CREATE (a)-[r:CURSO{año:"2002", nota:5, grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Dominguez"}),(b:materia {id:9}) CREATE (a)-[r:CURSO{año:"2001", nota:8, grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Dominguez"}),(b:materia {id:8}) CREATE (a)-[r:CURSO{año:"2001", nota:9, grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Dominguez"}),(b:materia {id:7}) CREATE (a)-[r:CURSO{año:"2002", nota:9, grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Dominguez"}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2001", nota:9, grupo:"B"}]->(b) return a,b,r;
 
-MATCH (a:Persona{apellido:"Pereyra"}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2002", nota:9}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"Pereyra"}),(b:materia {id:8}) CREATE (a)-[r:CURSO{año:"2001", nota:8}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"Pereyra"}),(b:materia {id:6}) CREATE (a)-[r:CURSO{año:"2002", nota:8}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"Pereyra"}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:6}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Pereyra"}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2002", nota:9, grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Pereyra"}),(b:materia {id:8}) CREATE (a)-[r:CURSO{año:"2001", nota:8, grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Pereyra"}),(b:materia {id:6}) CREATE (a)-[r:CURSO{año:"2002", nota:8, grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Pereyra"}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:6, grupo:"A"}]->(b) return a,b,r;
 
-MATCH (a:Persona{apellido:"Díaz"}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:6}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"López"}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:10}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"Díaz"}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"4"}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"López"}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"5"}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"Díaz"}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:"6"}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"López"}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:"7"}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"Díaz"}),(b:materia {id:11}) CREATE (a)-[r:CURSO{año:"2002", nota:"6"}]->(b) return a,b,r;
-MATCH (a:Persona{apellido:"López"}),(b:materia {id:11}) CREATE (a)-[r:CURSO{año:"2002", nota:"7"}]->(b) return a,b,r;
-MATCH (a:Persona{id:9}),(b:materia {id:9}) CREATE (a)-[r:CURSO{año:"2002", nota:"6"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Díaz"}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:6, grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"López"}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:10, grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Díaz"}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"4", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"López"}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"5", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Díaz"}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:"6", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"López"}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:"7", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"Díaz"}),(b:materia {id:11}) CREATE (a)-[r:CURSO{año:"2002", nota:"6", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{apellido:"López"}),(b:materia {id:11}) CREATE (a)-[r:CURSO{año:"2002", nota:"7", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:9}),(b:materia {id:9}) CREATE (a)-[r:CURSO{año:"2002", nota:"6", grupo:"A"}]->(b) return a,b,r;
 
-MATCH (a:Persona{id:10}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:"10"}]->(b) return a,b,r;
-MATCH (a:Persona{id:10}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"9"}]->(b) return a,b,r;
-MATCH (a:Persona{id:10}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:"7"}]->(b) return a,b,r;
+MATCH (a:Persona{id:10}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:"10", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:10}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"9", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:10}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:"7", grupo:"A"}]->(b) return a,b,r;
 
-MATCH (a:Persona{id:11}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:"10"}]->(b) return a,b,r;
-MATCH (a:Persona{id:12}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:"9"}]->(b) return a,b,r;
-
-
-
-MATCH (a:Persona{id:11}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"5"}]->(b) return a,b,r;
-
-MATCH (a:Persona{id:12}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"4"}]->(b) return a,b,r;
-MATCH (a:Persona{id:12}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2001", nota:"6"}]->(b) return a,b,r;
-MATCH (a:Persona{id:12}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"6"}]->(b) return a,b,r;
-MATCH (a:Persona{id:12}),(b:materia {id:11}) CREATE (a)-[r:CURSO{año:"2002", nota:"8"}]->(b) return a,b,r;
+MATCH (a:Persona{id:11}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:"10", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:12}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:"9", grupo:"B"}]->(b) return a,b,r;
 
 
-MATCH (a:Persona{id:13}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"10"}]->(b) return a,b,r;
-MATCH (a:Persona{id:13}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2003", nota:"6"}]->(b) return a,b,r;
-MATCH (a:Persona{id:13}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2002", nota:"6"}]->(b) return a,b,r;
-MATCH (a:Persona{id:13}),(b:materia {id:10}) CREATE (a)-[r:CURSO{año:"2002", nota:"8"}]->(b) return a,b,r;
+
+MATCH (a:Persona{id:11}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"5", grupo:"A"}]->(b) return a,b,r;
+
+MATCH (a:Persona{id:12}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"4", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:12}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2001", nota:"6", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:12}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"6", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:12}),(b:materia {id:11}) CREATE (a)-[r:CURSO{año:"2002", nota:"8", grupo:"B"}]->(b) return a,b,r;
 
 
-MATCH (a:Persona{id:14}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"9"}]->(b) return a,b,r;
-MATCH (a:Persona{id:14}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:"10"}]->(b) return a,b,r;
-MATCH (a:Persona{id:14}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2001", nota:"6"}]->(b) return a,b,r;
-MATCH (a:Persona{id:14}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2002", nota:"6"}]->(b) return a,b,r;
-MATCH (a:Persona{id:14}),(b:materia {id:10}) CREATE (a)-[r:CURSO{año:"2002", nota:"8"}]->(b) return a,b,r;
+MATCH (a:Persona{id:13}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"10", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:13}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2003", nota:"6", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:13}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2002", nota:"6", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:13}),(b:materia {id:10}) CREATE (a)-[r:CURSO{año:"2002", nota:"8", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:13}),(b:materia {id:7}) CREATE (a)-[r:CURSO{año:"2002", nota:"8", grupo:"B"}]->(b) return a,b,r;
 
 
-MATCH (a:Persona{id:15}),(b:materia {id:6}) CREATE (a)-[r:CURSO{año:"2002", nota:"10"}]->(b) return a,b,r;
-MATCH (a:Persona{id:15}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:"10"}]->(b) return a,b,r;
-MATCH (a:Persona{id:15}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2001", nota:"6"}]->(b) return a,b,r;
-MATCH (a:Persona{id:15}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2002", nota:"6"}]->(b) return a,b,r;
-MATCH (a:Persona{id:15}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:"8"}]->(b) return a,b,r;
+MATCH (a:Persona{id:14}),(b:materia {id:5}) CREATE (a)-[r:CURSO{año:"2002", nota:"9", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:14}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:"10", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:14}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2001", nota:"6", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:14}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2002", nota:"6", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:14}),(b:materia {id:10}) CREATE (a)-[r:CURSO{año:"2002", nota:"8", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:14}),(b:materia {id:7}) CREATE (a)-[r:CURSO{año:"2002", nota:"8", grupo:"A"}]->(b) return a,b,r;
 
 
-MATCH (a:Persona{id:16}),(b:materia {id:6}) CREATE (a)-[r:CURSO{año:"2002", nota:"9"}]->(b) return a,b,r;
-MATCH (a:Persona{id:16}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"8"}]->(b) return a,b,r;
+MATCH (a:Persona{id:15}),(b:materia {id:6}) CREATE (a)-[r:CURSO{año:"2002", nota:"10", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:15}),(b:materia {id:4}) CREATE (a)-[r:CURSO{año:"2002", nota:"10", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:15}),(b:materia {id:1}) CREATE (a)-[r:CURSO{año:"2001", nota:"6", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:15}),(b:materia {id:2}) CREATE (a)-[r:CURSO{año:"2002", nota:"6", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:15}),(b:materia {id:12}) CREATE (a)-[r:CURSO{año:"2002", nota:"8", grupo:"B"}]->(b) return a,b,r;
 
-MATCH (a:Persona{id:17}),(b:materia {id:7}) CREATE (a)-[r:CURSO{año:"2002", nota:"10"}]->(b) return a,b,r;
-MATCH (a:Persona{id:17}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"7"}]->(b) return a,b,r;
 
-MATCH (a:Persona{id:18}),(b:materia {id:7}) CREATE (a)-[r:CURSO{año:"2002", nota:"9"}]->(b) return a,b,r;
-MATCH (a:Persona{id:18}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"10"}]->(b) return a,b,r;
+MATCH (a:Persona{id:16}),(b:materia {id:6}) CREATE (a)-[r:CURSO{año:"2002", nota:"9", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:16}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"8", grupo:"B"}]->(b) return a,b,r;
 
-MATCH (a:Persona{id:19}),(b:materia {id:8}) CREATE (a)-[r:CURSO{año:"2002", nota:"10"}]->(b) return a,b,r;
-MATCH (a:Persona{id:19}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"6"}]->(b) return a,b,r;
-MATCH (a:Persona{id:19}),(b:materia {id:9}) CREATE (a)-[r:CURSO{año:"2002", nota:"5"}]->(b) return a,b,r;
+MATCH (a:Persona{id:17}),(b:materia {id:7}) CREATE (a)-[r:CURSO{año:"2002", nota:"10", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:17}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"7", grupo:"A"}]->(b) return a,b,r;
 
-MATCH (a:Persona{id:20}),(b:materia {id:8}) CREATE (a)-[r:CURSO{año:"2002", nota:"9"}]->(b) return a,b,r;
-MATCH (a:Persona{id:20}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"7"}]->(b) return a,b,r;
-MATCH (a:Persona{id:20}),(b:materia {id:9}) CREATE (a)-[r:CURSO{año:"2002", nota:"6"}]->(b) return a,b,r;
+MATCH (a:Persona{id:18}),(b:materia {id:7}) CREATE (a)-[r:CURSO{año:"2002", nota:"9", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:18}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"10", grupo:"B"}]->(b) return a,b,r;
+
+MATCH (a:Persona{id:19}),(b:materia {id:8}) CREATE (a)-[r:CURSO{año:"2002", nota:"10", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:19}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"6", grupo:"A"}]->(b) return a,b,r;
+MATCH (a:Persona{id:19}),(b:materia {id:9}) CREATE (a)-[r:CURSO{año:"2002", nota:"5", grupo:"A"}]->(b) return a,b,r;
+
+MATCH (a:Persona{id:20}),(b:materia {id:8}) CREATE (a)-[r:CURSO{año:"2002", nota:"9", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:20}),(b:materia {id:3}) CREATE (a)-[r:CURSO{año:"2002", nota:"7", grupo:"B"}]->(b) return a,b,r;
+MATCH (a:Persona{id:20}),(b:materia {id:9}) CREATE (a)-[r:CURSO{año:"2002", nota:"6", grupo:"B"}]->(b) return a,b,r;
 
 
 
@@ -173,6 +179,7 @@ Relaciones sociales
 MATCH (a:Persona{id:1}),(b:Persona {id:5}) CREATE (b)-[r:CONOCE {}]->(a) return a,b,r;
 MATCH (a:Persona{id:2}),(b:Persona {id:4}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
 MATCH (a:Persona{id:2}),(b:Persona {id:18}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
 
 MATCH (a:Persona{id:3}),(b:Persona {id:5}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
 MATCH (a:Persona{id:5}),(b:Persona {id:3}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
@@ -223,13 +230,86 @@ MATCH (a:Persona{id:20}),(b:Persona {id:15}) CREATE (a)-[r:CONOCE {}]->(b) retur
 MATCH (a:Persona{id:15}),(b:Persona {id:12}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
 MATCH (a:Persona{id:12}),(b:Persona {id:15}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
 
-MATCH (a:Persona{id:"14"}),(b:Persona {id:12"}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
-MATCH (a:Persona{id:"12"}),(b:Persona {id:14"}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:14}),(b:Persona {id:12}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:12}),(b:Persona {id:14}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
 
 MATCH (a:Persona{id:14}),(b:Persona {id:10}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
 MATCH (a:Persona{id:10}),(b:Persona {id:14}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
 MATCH (a:Persona{id:10}),(b:Persona {id:2}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
 MATCH (a:Persona{id:2}),(b:Persona {id:10}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+
+MATCH (a:Persona{id:15}),(b:Persona {id:3}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:3}),(b:Persona {id:15}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+
+
+MATCH (a:Persona{id:19}),(b:Persona {id:3}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:19}),(b:Persona {id:2}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:19}),(b:Persona {id:10}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:19}),(b:Persona {id:12}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:19}),(b:Persona {id:14}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+
+MATCH (a:Persona{id:2}),(b:Persona {id:19}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:2}),(b:Persona {id:12}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:2}),(b:Persona {id:14}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+
+MATCH (a:Persona{id:3}),(b:Persona {id:19}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:3}),(b:Persona {id:5}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:3}),(b:Persona {id:10}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:3}),(b:Persona {id:12}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:3}),(b:Persona {id:14}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+MATCH (a:Persona{id:13}),(b:Persona {id:19}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:13}),(b:Persona {id:5}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:13}),(b:Persona {id:10}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:13}),(b:Persona {id:12}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:13}),(b:Persona {id:14}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+
+MATCH (a:Persona{id:10}),(b:Persona {id:6}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:6}),(b:Persona {id:10}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:10}),(b:Persona {id:1}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:1}),(b:Persona {id:10}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:10}),(b:Persona {id:3}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:10}),(b:Persona {id:4}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:4}),(b:Persona {id:10}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+MATCH (a:Persona{id:2}),(b:Persona {id:6}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:6}),(b:Persona {id:2}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:2}),(b:Persona {id:1}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:1}),(b:Persona {id:2}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:2}),(b:Persona {id:3}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:10}),(b:Persona {id:2}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:2}),(b:Persona {id:10}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+MATCH (a:Persona{id:6}),(b:Persona {id:15}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:15}),(b:Persona {id:6}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:6}),(b:Persona {id:18}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:18}),(b:Persona {id:6}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+MATCH (a:Persona{id:8}),(b:Persona {id:18}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:18}),(b:Persona {id:8}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:8}),(b:Persona {id:12}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:12}),(b:Persona {id:8}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:8}),(b:Persona {id:10}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:10}),(b:Persona {id:8}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+MATCH (a:Persona{id:7}),(b:Persona {id:18}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:18}),(b:Persona {id:7}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:7}),(b:Persona {id:12}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:12}),(b:Persona {id:7}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:7}),(b:Persona {id:10}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:10}),(b:Persona {id:7}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+MATCH (a:Persona{id:11}),(b:Persona {id:18}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:18}),(b:Persona {id:11}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:11}),(b:Persona {id:19}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+MATCH (a:Persona{id:19}),(b:Persona {id:11}) CREATE (a)-[r:CONOCE {}]->(b) return a,b,r;
+
+
 
 ****cantidad de personas que dictaron materias
 MATCH (n:Persona)-[:DICTO]->(c:materia {id:3})
@@ -258,7 +338,39 @@ WHERE id(a) <> id(b)
 AND NOT r.año = d.año
 RETURN DISTINCT a.nombre,a.apellido,r.año,l.nombre,b.nombre, b.apellido,d.año
 
+MATCH (a:Persona)-[r:CURSO]->(l:materia)<-[d:CURSO]-(b:Persona)
+WHERE id(a) <> id(b)
+WHERE grupo(d) <> grupo(d)
+AND  r.año = d.año
+RETURN DISTINCT a.nombre,a.apellido,r.año,l.nombre,b.nombre, b.apellido,d.año
 
+MATCH (a:Persona)-[r:CURSO]->(l:materia)
+ORDER BY l.id desc, r.año
+RETURN DISTINCT a.nombre,a.apellido,r.año,l.nombre,b.nombre, b.apellido,d.año
+
+MATCH (a:Persona)-[r:CURSO]->(l:materia)
+RETURN  a.nombre,a.apellido,r.año,l.nombre,r.grupo ORDER BY l.id asc, r.año desc, r.grupo desc
+
+MATCH (a:Persona {id:10})-[r:CURSO]->()<-[d:CURSO]-(b:Persona)
+WHERE r.año = d.año
+AND r.grupo = d.grupo
+RETURN (b)
+
+personas que cursan esta materia y son de distintos grupos
+
+MATCH (a:Persona )-[r:CURSO]->(m: {id:7})<-[d:CURSO]-(b:Persona)
+WHERE r.año = d.año
+AND r.grupo = d.grupo
+RETURN (b)
+
+MATCH (a:Persona )-[r:CURSO]->(m:materia {id:7})<-[d:CURSO]-(b:Persona),(s:Persona )-[fr:CURSO]->()<-[ffd:CURSO]-(fd:Persona)
+WHERE r.año = d.año
+AND id(a)=id(s) AND id(b)=id(fd)
+AND ffd.año=fr.año
+AND not id(a)=id(b)
+AND NOT r.grupo = "B"
+RETURN distinct a
+RETURN distinct a.nombre as nombre,a.apellido, a.id as id, r.grupo as grupo
 
 2)*****Profesores que dictaron > 1
 
@@ -287,7 +399,7 @@ WITH  a.nombre as nombre, count( b) as cantidad, sum(toInteger(r.nota)) as sum
 RETURN nombre, sum/cantidad as promedio
 
 
-4)*****Listado para recomendación de alumnos que cursaron en el mismo curso y cuatrimestre pero no se conocen entre sí.
+4)*****Listado para recomendación de alumnos que cursaron en el mismo curso y año pero no se conocen entre sí.
 MATCH (a:Persona)-[r:CURSO]->(l:materia)<-[d:CURSO]-(b:Persona)
 WHERE id(a) <> id(b)
 AND r.año = d.año
